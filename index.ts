@@ -1,7 +1,9 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
-import { createConnection } from 'typeorm';
+
+import { AppDataSource } from './data-source';
+import { misrouter } from './src/routes/misrouter';
 
 const app = express();
 app.use(helmet());
@@ -14,21 +16,18 @@ app.use(cors(options));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const PORT = 3000;
-
-createConnection()
-  .then(() => {
-    console.log('DB Connected');
-  })
-  .catch((e) => {
-    console.log('Error:' + e);
-  });
+const PORT = process.env.SERVER_PORT || 8070;
 
 app.listen(PORT, () => {
-  console.log('Server is up on port - ', PORT);
+  console.log(
+    '\x1b[32m',
+    `***************************** Server is up on port ${PORT} *****************************`,
+    '\x1b[32m'
+  );
+  AppDataSource.initialize();
 });
 
-// app.use('/api', misrouter);
+app.use('/api', misrouter);
 
 app.get('/api/health', (req: Request, res: Response) => {
   res.json(`jnc-mis service health is good, and runnubf on port ${PORT}`);
