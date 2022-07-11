@@ -20,7 +20,7 @@ const PORT = 3000;
 createConnection().then(()=>{
 console.log('DB Connected')
 }).catch((e)=>{
-    console.log("Error:"+e)
+    console.log('Error:'+e)
 }) 
 
 app.listen(PORT, () => {
