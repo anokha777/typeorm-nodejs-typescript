@@ -10,6 +10,7 @@
     "dev": "env-cmd -f .env.dev node ./dist/index.js",
     "local": "env-cmd -f .env.local nodemon index.ts",
     "lint": "eslint . --ext .js,.ts",
+    "lint-fix": "npm run lint -- --fix",
     "build-dev": "tsc"
   },
   "keywords": [],
